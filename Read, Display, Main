@@ -72,13 +72,48 @@ void displaymembers(members *head){
 	cout << "These are the current active members of the Crew Team @ RIT with carpool points : " << endl;
 
     while(current != NULL){
-    	cout << setw(4) << x + 1 << " .) "
+    	cout << setw(2) << x + 1 << ".) "
     	<< " Name: " << left << setw(15) << current -> name
-		<< " Carpool Points: " << setw(5)<< current -> points;
+		<< " Carpool Points: " << setw(5)<< current -> points
+		<< endl;
 
     	current = current->next;
     	x++;
     }
     return;
 }
+
+int main()
+{
+	cout << "WELCOME CREW TEAM CAR POOL" << endl;
+	cout << "       ____________" << endl;
+	cout << "      //    ||    \\\\ " << endl;
+	cout << " ____//_____||_____\\\\__" << endl;
+	cout << ")  _                  _ \\ " << endl;
+	cout << "|_/ \\________________/ \\_|" << endl;
+	cout << "__\\_/________________\\_/___" << endl;
+	
+	members *mainhead;
+
+	mainhead = read();
+	displaymembers(mainhead);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
