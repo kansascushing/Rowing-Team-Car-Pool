@@ -31,7 +31,7 @@ members *read(void)
 	  current = new members;
 	  head = current;
 
-	  myfile.open("FILE NAME.txt");
+	  myfile.open("seat_credits.txt");
 
 	  if(myfile.fail())
 	  {
