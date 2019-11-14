@@ -1,0 +1,84 @@
+/*
+ * main.cpp
+ *
+ *  Created on: Nov 13, 2019
+ *      Author: kxc2541
+ */
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <cctype>
+#include <stdio.h>
+#include <cstring>
+#include <cstdio>
+
+using namespace std;
+
+struct members{
+	string name;
+	int points;
+	members *next;
+};
+
+members *read(void)
+{
+	  ifstream myfile;
+
+	  members *head, *current;
+	  current = new members;
+	  head = current;
+
+	  myfile.open("FILE NAME.txt");
+
+	  if(myfile.fail())
+	  {
+		  cout << "\nFile doesn't exist... Program Terminated" << endl;
+		  exit(1);
+	  }
+
+	  do{
+		  getline(myfile, current->name);
+		  myfile>>current->points;
+		  myfile.ignore();
+
+		  if(myfile.eof())
+		  {
+			  current-> next = NULL;
+			  break;
+		  }
+		  else
+		  {
+			  current -> next = new members;
+			  current = current-> next;
+		  }
+
+		}
+		while(true);
+
+
+
+      	myfile.close();
+      	return(head);
+}
+
+void displaymembers(members *head){
+    int x = 0;
+
+	members *current = head;
+
+	cout << "These are the current active members of the Crew Team @ RIT with carpool points : " << endl;
+
+    while(current != NULL){
+    	cout << setw(4) << x + 1 << " .) "
+    	<< " Name: " << left << setw(15) << current -> name
+		<< " Carpool Points: " << setw(5)<< current -> points;
+
+    	current = current->next;
+    	x++;
+    }
+    return;
+}
+
