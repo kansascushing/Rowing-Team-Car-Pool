@@ -43,7 +43,8 @@ void readPassengers(){
 
 void displayPassengers(){
 	for (int i = 0; i <24; i++){
-		cout << namesArray[i] << endl;
+		cout << setprecision(2) << i << ".) " ;
+		cout << namesArray[i];
 		cout << pointsArray[i] << endl;
 	}
 }
@@ -89,12 +90,23 @@ class Vehicle {
 class Pickup : public Vehicle {
 
 	private :
-		char vehArray[1] = {5};
+		char vehArray[1] = {'5'};
 		string passengers[1] = { "Pat Cooper"};
 
 	public:
 		void addPassenger(int passNum, int pos){
 			passengers[pos] = namesArray[passNum];
+		}
+		void displaycar()
+		{
+			cout << "        Truck " << endl;
+			cout << "       _______" << endl;
+			cout << "      //     ||     " << endl;
+			cout << " ____//______||_________" << endl;
+			cout << ")  _        [" <<  vehicleColor << "]       _ \\ " << endl;
+			cout << "|_/ \\________________/ \\_|" << endl;
+			cout << "__\\_/________________\\_/___" << endl;
+			cout << "       (-)   (" << vehArray[0] << ")" << endl;
 		}
 
 };
@@ -102,15 +114,42 @@ class Pickup : public Vehicle {
 class Compact : public Vehicle {
 
 	private :
-		char vehArray[3] = {5, 3, 3};
+		char vehArray[3] = {'5', '3', '3'};
 		string passengers[3] = { "Jane Cox ", "Tim Taylor", "Ben Butler"};
+	public :
+		void displaycar()
+		{
+			cout << "       Compact " << endl;
+			cout << "       _______" << endl;
+			cout << "      /   |   \\ " << endl;
+			cout << " ____/____|____\\__" << endl;
+			cout << ")  _      [" << vehicleColor << "]    _ \\ " << endl;
+			cout << "|_/ \\___________/ \\_|" << endl;
+			cout << "__\\_/___________\\_/___" << endl;
+			cout << "       (-)   (" << vehArray[0] << ")" << endl;
+			cout << "       ("<< vehArray[1] << ")   (" << vehArray[2] << ")" << endl;
+		}
 };
 
 class Sedan : public Vehicle {
 
 	private :
-		char vehArray[4] = {5, 2, 1, 2};
+		char vehArray[4] = {'5', '2', '1', '2'};
 		string passengers[4] = { "Art Campbell ", "Ann Edwards ", "Pam Allen ", "Tony James"};
+
+	public :
+		void displaycar()
+		{
+			cout << "          Sedan" << endl;
+			cout << "       ____________" << endl;
+			cout << "      //    ||    \\\\ " << endl;
+			cout << " ____//_____||_____\\\\__" << endl;
+			cout << ")  _        [" << vehicleColor << "]       _ \\ " << endl;
+			cout << "|_/ \\________________/ \\_|" << endl;
+			cout << "__\\_/________________\\_/___" << endl;
+			cout << "       (-)   (" << vehArray[0] << ")" << endl;
+			cout << "       (" << vehArray[1] << ") (" << vehArray[2] << ") (" << vehArray[3] << ")" << endl;
+		}
 };
 
 
@@ -143,20 +182,16 @@ int main() {
 
 	//Displays welcome message
 	cout << "WELCOME CREW TEAM CAR POOL" << endl;
-	cout << "       ____________" << endl;
-	cout << "      //    ||    \\\\ " << endl;
-	cout << " ____//_____||_____\\\\__" << endl;
-	cout << ")  _                  _ \\ " << endl;
-	cout << "|_/ \\________________/ \\_|" << endl;
-	cout << "__\\_/________________\\_/___" << endl;
+
 
 
 	cout << "----------------------------" << endl;
-	cout << "  Current Seat Availability " << endl;
-	cout << " Trucks    Compact    Sedan " << endl;
-	cout << " ------    -------    ----- " << endl;
-
+	cout << "  Team Members and Points " << endl;
 	displayPassengers();
+
+	pTruck.displaycar();
+	gCompact.displaycar();
+	rSedan.displaycar();
 
 
 
