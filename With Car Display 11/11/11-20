@@ -1,0 +1,204 @@
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Title: reservation.cpp
+// Course: Computational Problem Solving CPET-II
+// Developers: Kansas Cushing & Olivia Luttazi
+// Date : Nov 10th 2019
+// Description:
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <cctype>
+#include <stdio.h>
+#include <cstring>
+#include <cstdio>
+using namespace std;
+
+//holds passenger names, points and if they have a placement
+string namesArray[24];
+int pointsArray[24];
+bool placedArray[24];
+
+
+void readPassengers(){
+	ifstream myfile;
+	myfile.open("seat_credits.txt");
+	  if(myfile.fail())
+	  {
+		  cout << "\nFile doesn't exist... Program Terminated" << endl;
+		  exit(1);
+	  }
+	for (int i = 0; i <24; i++){
+		getline(myfile, namesArray[i]);
+		myfile >> pointsArray[i];
+		myfile.ignore();
+	}
+
+	myfile.close();
+}
+
+void displayPassengers(){
+	for (int i = 0; i <24; i++){
+		cout << setprecision(2) << i << ".) " ;
+		cout << namesArray[i];
+		cout << pointsArray[i] << endl;
+	}
+}
+
+class Vehicle {
+
+	protected :
+		string vehicleType;
+		char vehicleColor;
+	public :
+		void createVehicle(char color, string type){
+			vehicleColor = color;
+			vehicleType = type;
+			return;
+		}
+		void showVehicle(){
+				switch (vehicleColor)
+				{
+					case 'P' :
+					case 'p' : cout << "Purple " << endl;
+							   break;
+					case 'G' :
+					case 'g' : cout << "Green " << endl;
+							   break;
+					case 'B' :
+					case 'b' : cout << "Blue " << endl;
+							   break;
+					case 'R' :
+					case 'r' : cout << "Red " << endl;
+								break;
+					case 'Y' :
+					case 'y' : cout << "Yellow " << endl;
+								break;
+					default  : cout << "Unknown " << endl;
+							   break;
+				}
+				cout << vehicleType << endl;
+				return;
+			}
+
+};
+
+class Pickup : public Vehicle {
+
+	private :
+		char vehArray[1] = {'5'};
+		string passengers[1] = { "Pat Cooper"};
+
+	public:
+		void addPassenger(int passNum, int pos){
+			passengers[pos] = namesArray[passNum];
+		}
+		void displaycar()
+		{
+			cout << "        Truck " << endl;
+			cout << "       _______" << endl;
+			cout << "      //     ||     " << endl;
+			cout << " ____//______||_________" << endl;
+			cout << ")  _        [" <<  vehicleColor << "]       _ \\ " << endl;
+			cout << "|_/ \\________________/ \\_|" << endl;
+			cout << "__\\_/________________\\_/___" << endl;
+			cout << "       (-)   (" << vehArray[0] << ")" << endl;
+		}
+
+};
+
+class Compact : public Vehicle {
+
+	private :
+		char vehArray[3] = {'5', '3', '3'};
+		string passengers[3] = { "Jane Cox ", "Tim Taylor", "Ben Butler"};
+	public :
+		void displaycar()
+		{
+			cout << "       Compact " << endl;
+			cout << "       _______" << endl;
+			cout << "      /   |   \\ " << endl;
+			cout << " ____/____|____\\__" << endl;
+			cout << ")  _      [" << vehicleColor << "]    _ \\ " << endl;
+			cout << "|_/ \\___________/ \\_|" << endl;
+			cout << "__\\_/___________\\_/___" << endl;
+			cout << "       (-)   (" << vehArray[0] << ")" << endl;
+			cout << "       ("<< vehArray[1] << ")   (" << vehArray[2] << ")" << endl;
+		}
+};
+
+class Sedan : public Vehicle {
+
+	private :
+		char vehArray[4] = {'5', '2', '1', '2'};
+		string passengers[4] = { "Art Campbell ", "Ann Edwards ", "Pam Allen ", "Tony James"};
+
+	public :
+		void displaycar()
+		{
+			cout << "          Sedan" << endl;
+			cout << "       ____________" << endl;
+			cout << "      //    ||    \\\\ " << endl;
+			cout << " ____//_____||_____\\\\__" << endl;
+			cout << ")  _        [" << vehicleColor << "]       _ \\ " << endl;
+			cout << "|_/ \\________________/ \\_|" << endl;
+			cout << "__\\_/________________\\_/___" << endl;
+			cout << "       (-)   (" << vehArray[0] << ")" << endl;
+			cout << "       (" << vehArray[1] << ") (" << vehArray[2] << ") (" << vehArray[3] << ")" << endl;
+		}
+};
+
+
+
+
+int main() {
+	readPassengers();
+
+
+	//Object instantiation
+	Pickup pTruck, yTruck, rTruck;
+	Compact gCompact, bCompact, yCompact;
+	Sedan rSedan, gSedan, bSedan;
+
+	//Creates truck objs and sets colors
+	pTruck.createVehicle('P', "Pickup");
+	yTruck.createVehicle('Y', "Pickup");
+	rTruck.createVehicle('R', "Pickup");
+
+	//Creates compact objs and sets colors
+	gCompact.createVehicle('G', "Compact");
+	bCompact.createVehicle('B', "Compact");
+	yCompact.createVehicle('Y', "Compact");
+
+	//Creates sedan objs and sets colors
+	rSedan.createVehicle('R', "Sedan");
+	gSedan.createVehicle('G', "Sedan");
+	bSedan.createVehicle('B', "Sedan");
+
+
+	//Displays welcome message
+	cout << "WELCOME CREW TEAM CAR POOL" << endl;
+
+
+
+	cout << "----------------------------" << endl;
+	cout << "  Team Members and Points " << endl;
+	displayPassengers();
+
+	pTruck.displaycar();
+	gCompact.displaycar();
+	rSedan.displaycar();
+
+
+
+
+
+
+	return 0;
+
+}
+
