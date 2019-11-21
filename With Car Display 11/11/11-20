@@ -21,8 +21,10 @@ using namespace std;
 //holds passenger names, points and if they have a placement
 string namesArray[24];
 int pointsArray[24];
-bool placedArray[24];
+bool placedArray[24]; //false if not placed
 
+//very secret
+string superSecretPassword = "password"; //dont tell anyone, it's illegal
 
 void readPassengers(){
 	ifstream myfile;
@@ -35,6 +37,7 @@ void readPassengers(){
 	for (int i = 0; i <24; i++){
 		getline(myfile, namesArray[i]);
 		myfile >> pointsArray[i];
+		placedArray[i] = false;
 		myfile.ignore();
 	}
 
@@ -53,15 +56,15 @@ class Vehicle {
 
 	protected :
 		string vehicleType;
-		char vehicleColor;
+		char vehiclecolortype;
 	public :
-		void createVehicle(char color, string type){
-			vehicleColor = color;
+		void createVehicle(char colortype, string type){
+			vehiclecolortype = colortype;
 			vehicleType = type;
 			return;
 		}
 		void showVehicle(){
-				switch (vehicleColor)
+				switch (vehiclecolortype)
 				{
 					case 'P' :
 					case 'p' : cout << "Purple " << endl;
@@ -90,12 +93,13 @@ class Vehicle {
 class Pickup : public Vehicle {
 
 	private :
-		char vehArray[1] = {'5'};
-		string passengers[1] = { "Pat Cooper"};
+		char vehArray[1] = {'5'}; ;//Array of values of each seat, will be replaced by an X when the seat is taken
+		string passengers[1] = { "-"}; //Array that stores the names of the passangers in the car seats
 
 	public:
 		void addPassenger(int passNum, int pos){
 			passengers[pos] = namesArray[passNum];
+			vehArray[pos] = 'X';
 		}
 		void displaycar()
 		{
@@ -103,7 +107,7 @@ class Pickup : public Vehicle {
 			cout << "       _______" << endl;
 			cout << "      //     ||     " << endl;
 			cout << " ____//______||_________" << endl;
-			cout << ")  _        [" <<  vehicleColor << "]       _ \\ " << endl;
+			cout << ")  _        [" <<  vehiclecolortype << "]       _ \\ " << endl;
 			cout << "|_/ \\________________/ \\_|" << endl;
 			cout << "__\\_/________________\\_/___" << endl;
 			cout << "       (-)   (" << vehArray[0] << ")" << endl;
@@ -114,16 +118,20 @@ class Pickup : public Vehicle {
 class Compact : public Vehicle {
 
 	private :
-		char vehArray[3] = {'5', '3', '3'};
-		string passengers[3] = { "Jane Cox ", "Tim Taylor", "Ben Butler"};
+		char vehArray[3] = {'5', '3', '3'};//Array of values of each seat, will be replaced by an X when the seat is taken
+		string passengers[3] = { "-", "-", "-"}; //Array that stores the names of the passangers in the car seats
 	public :
+		void addPassenger(int passNum, int pos){
+			passengers[pos] = namesArray[passNum];
+			vehArray[pos] = 'X';
+		}
 		void displaycar()
 		{
 			cout << "       Compact " << endl;
 			cout << "       _______" << endl;
 			cout << "      /   |   \\ " << endl;
 			cout << " ____/____|____\\__" << endl;
-			cout << ")  _      [" << vehicleColor << "]    _ \\ " << endl;
+			cout << ")  _      [" << vehiclecolortype << "]    _ \\ " << endl;
 			cout << "|_/ \\___________/ \\_|" << endl;
 			cout << "__\\_/___________\\_/___" << endl;
 			cout << "       (-)   (" << vehArray[0] << ")" << endl;
@@ -134,17 +142,21 @@ class Compact : public Vehicle {
 class Sedan : public Vehicle {
 
 	private :
-		char vehArray[4] = {'5', '2', '1', '2'};
-		string passengers[4] = { "Art Campbell ", "Ann Edwards ", "Pam Allen ", "Tony James"};
+		char vehArray[4] = {'5', '2', '1', '2'};  //Array of values of each seat, will be replaced by an X when the seat is taken
+		string passengers[4] = { "-", "-", "-", "-"}; //Array that stores the names of the passangers in the car seats
 
 	public :
+		void addPassenger(int passNum, int pos){
+			passengers[pos] = namesArray[passNum];
+			vehArray[pos] = 'X';
+		}
 		void displaycar()
 		{
 			cout << "          Sedan" << endl;
 			cout << "       ____________" << endl;
 			cout << "      //    ||    \\\\ " << endl;
 			cout << " ____//_____||_____\\\\__" << endl;
-			cout << ")  _        [" << vehicleColor << "]       _ \\ " << endl;
+			cout << ")  _        [" << vehiclecolortype << "]       _ \\ " << endl;
 			cout << "|_/ \\________________/ \\_|" << endl;
 			cout << "__\\_/________________\\_/___" << endl;
 			cout << "       (-)   (" << vehArray[0] << ")" << endl;
@@ -152,36 +164,33 @@ class Sedan : public Vehicle {
 		}
 };
 
-
+void printMaster(){
+	//does some things
+}
 
 
 int main() {
-	readPassengers();
-
+	readPassengers(); //brings in text file of passanger names and points left
 
 	//Object instantiation
 	Pickup pTruck, yTruck, rTruck;
 	Compact gCompact, bCompact, yCompact;
 	Sedan rSedan, gSedan, bSedan;
 
-	//Creates truck objs and sets colors
+	//Creates truck objs and sets colortypes
 	pTruck.createVehicle('P', "Pickup");
 	yTruck.createVehicle('Y', "Pickup");
 	rTruck.createVehicle('R', "Pickup");
 
-	//Creates compact objs and sets colors
+	//Creates compact objs and sets colortypes
 	gCompact.createVehicle('G', "Compact");
 	bCompact.createVehicle('B', "Compact");
 	yCompact.createVehicle('Y', "Compact");
 
-	//Creates sedan objs and sets colors
+	//Creates sedan objs and sets colortypes
 	rSedan.createVehicle('R', "Sedan");
 	gSedan.createVehicle('G', "Sedan");
 	bSedan.createVehicle('B', "Sedan");
-
-
-	//Displays welcome message
-	cout << "WELCOME CREW TEAM CAR POOL" << endl;
 
 
 
@@ -189,16 +198,178 @@ int main() {
 	cout << "  Team Members and Points " << endl;
 	displayPassengers();
 
-	pTruck.displaycar();
-	gCompact.displaycar();
-	rSedan.displaycar();
+	//pTruck.displaycar();
+	//gCompact.displaycar();
+	//rSedan.displaycar();
+
+	//Operates a menu with switch/case statements. Prompts user for
+	//inputs and takes in chars to determine the correct option.
+	char option;
+	string pass;
+	int inputNum, selectiontype, cartype, colortype, seattype;
+	bool nameInSystem = false;
+	bool numberfound = false;
+	int credits;
+	do{
+		cout << "================Menu==============" << endl
+			 <<	"1) Create a reservation" << endl
+			 <<	"2) Display the seat assignments" << endl
+			 <<	"3) Modify a reservation" << endl
+			 <<	"4) Delete a reservation" << endl
+			 <<	"5) Print a reservation" << endl
+			 <<	"6) Print all reservations" << endl
+			 <<	"7) Quit :( \n" << endl
+			 << "What do you want to do?" << endl;
+		cin >> option;
+
+		switch(option){
+
+		case '1': //Create a reservation
+			cout << "Enter a passenger's number" << endl;
+			cin >> inputNum; cin.ignore();
+
+			for (int i = 0; i < 24; i++) {
+				if (inputNum == i){
+					nameInSystem = true;
+					credits = pointsArray[i];
+					cout << namesArray[i] << " has " << credits << " points left." << endl;
+					numberfound = true; //to not print out not found
+					if (credits == 0) {
+						cout << namesArray[i] << "has used all their credits!" << endl;
+						nameInSystem = false; //stops bug later on
+						break;
+					}
+					if(placedArray[i] == true)
+					{
+						cout << namesArray[i] << " has already been placed!" << endl;
+						nameInSystem = false; //stops bug later on
+						break;
+					}
+				}
+
+			}//end loop
+
+			if(numberfound == false) {
+				nameInSystem = false;
+				cout << "User not found!" << endl;
+				break;
+			}
+
+
+			if (nameInSystem == true) {
+				cout << "Available seats: " << endl;
+				pTruck.displaycar();
+				yTruck.displaycar();
+				rTruck.displaycar();
+				cout << "*****************************" << endl;
+				gCompact.displaycar();
+				bCompact.displaycar();
+				yCompact.displaycar();
+				cout << "*****************************" << endl;
+				rSedan.displaycar();
+				gSedan.displaycar();
+				bSedan.displaycar();
+
+				//NEED TO CHECK IF CREDITS ARE VALID NUMBER
+				cout <<"Would you like to select by a  \n1.)Specific Car and Seat \n2.)Seat Type" << endl;
+				cin >> selectiontype;
+
+				if(selectiontype ==1)
+				{
+					cout << "What Type Would You like to Choose? \n.1)Truck \n.)2Compact \n3.)Sedan" << endl;
+					cin >> cartype;
+					if(cartype ==1) //Truck
+					{
+						cout << "What colortype Would You Choose ? \n1.)Purple \n2.)Yellow \n3.)Red" << endl;
+						cin >> colortype;
+						if(colortype == 1) { pTruck.addPassenger(inputNum, 0); }
+						else if(colortype ==2) { yTruck.addPassenger(inputNum, 0); }
+						else if(colortype ==3) { rTruck.addPassenger(inputNum, 0); }
+					}
+					else if(cartype ==2) //Compact
+					{
+						cout << "What colortype Would You Choose ? \n1.)Green \n2.)Blue \n3.)Yellow" << endl;
+						cin >> colortype;
+						cout << "What Seat Would You Like ? \n1.)Front \n2.)Back" << endl;
+						cin >> seattype;
+						seattype = seattype -1;
+						if(colortype == 1) {
+							pTruck.addPassenger(inputNum, seattype);
+						}
+						else if(colortype ==2) {
+							yTruck.addPassenger(inputNum, seattype);
+						}
+						else if(colortype ==3) { rTruck.addPassenger(inputNum, seattype); }
+					}
+					else if(cartype ==3)
+					{
+						cout << "What colortype Would You Choose ? \n1.)Red \n2.)Green \n3.)Blue" << endl;
+						cin >> colortype;
+						cout << "What Seat Would You Like ? \n1.)Front \n2.)Side \n3.)Middle" << endl;
+						cin >> seattype;
+						seattype = seattype-1;
+						if(colortype == 1) {pTruck.addPassenger(inputNum, seattype); }
+						else if(colortype ==2) { yTruck.addPassenger(inputNum, seattype); }
+						else if(colortype ==3) { rTruck.addPassenger(inputNum, seattype); }
+					}
+				}
+				if(selectiontype ==2)
+				{
+
+				}
+
+			}
 
 
 
+			break;
 
+		case '2': // Display seats
 
+			pTruck.displaycar();
+			yTruck.displaycar();
+			rTruck.displaycar();
+			cout << "*****************************" << endl;
+			gCompact.displaycar();
+			bCompact.displaycar();
+			yCompact.displaycar();
+			cout << "*****************************" << endl;
+			rSedan.displaycar();
+			gSedan.displaycar();
+			bSedan.displaycar();
 
+			break;
+
+		case '3' : //Modify a reservation
+			break;
+
+		case '4' : //Delete a reservation
+			break;
+
+		case '5' : //Print a reservation
+			break;
+
+		case '6' : //Print reservation masterlist
+			cout << "Please enter administrator password..." << endl;
+			cin >> pass; cin.ignore();
+			if (pass == superSecretPassword) {
+				cout << "Access granted: printing reservations." << endl;
+				printMaster();
+			}
+			else {
+				cout << "Access denied : password incorrect." << endl;
+			}
+
+			break;
+
+		case'7' : //Exits the program
+			cout << "Exiting program";
+			exit(0);
+			break; //exit
+
+		}//end case
+	} while(1); //menu
 	return 0;
+}//int main()
 
-}
 
