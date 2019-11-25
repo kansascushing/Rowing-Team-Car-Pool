@@ -58,6 +58,15 @@ void displayPassengers(){
 		std::cout << std::setw(10) << "Points: " <<pointsArray[i] << endl;
 	}
 }
+void printMaster(){
+	for (int i = 0; i <24; i++){
+		std::cout << std::setw(3) << i << ".) " ;
+		std::cout << std::setw(25) << namesArray[i];
+		std::cout << std::setw(10) << "Points: " <<pointsArray[i];
+		std::cout << std::setw(30) << "Reservation Number : " << resNumArray[i] << endl;
+	}
+	return ;
+}
 
 class Vehicle {
 
@@ -137,6 +146,24 @@ class Pickup : public Vehicle {
 			if(vehArray[0]== '5') //if seat is still a number/not changed to X
 				seatfree = true;
 			return(seatfree);
+		}
+		bool passangerhere(int resnum)
+		{
+			bool here = true;
+			if(passengers[0] == namesArray[resnum]) {}
+			else here = false;
+
+			return(here);
+		}
+		void deletepassanger(int resnum)
+		{
+			if(passengers[0] == namesArray[resnum]) {
+				passengers[0] = '-';
+				vehArray[0] = '5';
+				pointsArray[resnum] = pointsArray[resnum] +5;
+				placedArray[resnum] = false;
+				resNumArray[resnum] = 0;
+			}
 		}
 
 };
@@ -222,6 +249,40 @@ class Compact : public Vehicle {
 			}
 
 			return(seatfree);
+		}
+		bool passangerhere(int resnum)
+		{
+			bool here = true;
+			if(passengers[0] == namesArray[resnum]) {}
+			else if(passengers[1] == namesArray[resnum]) {}
+			else if(passengers[2] == namesArray[resnum]) {}
+			else here = false;
+
+			return(here);
+		}
+		void deletepassanger(int resnum)
+		{
+			if(passengers[0] == namesArray[resnum]) {
+				passengers[0] = '-';
+				vehArray[0] = '5';
+				pointsArray[resnum] = pointsArray[resnum] +5;
+				placedArray[resnum] = false;
+				resNumArray[resnum] = 0;
+			}
+			else if(passengers[1] == namesArray[resnum]) {
+				passengers[1] = '-';
+				vehArray[1] = '3';
+				pointsArray[resnum] = pointsArray[resnum] +3;
+				placedArray[resnum] = false;
+				resNumArray[resnum] = 0;
+			}
+			else if(passengers[2] == namesArray[resnum]) {
+				passengers[2] = '-';
+				vehArray[2] = '3';
+				pointsArray[resnum] = pointsArray[resnum] +3;
+				placedArray[resnum] = false;
+				resNumArray[resnum] = 0;
+			}
 		}
 };
 
@@ -323,17 +384,50 @@ class Sedan : public Vehicle {
 
 		return(seatfree);
 		}
+		bool passangerhere(int resnum)
+		{
+			bool here = true;
+			if(passengers[0] == namesArray[resnum]) {}
+			else if(passengers[1] == namesArray[resnum]) {}
+			else if(passengers[2] == namesArray[resnum]) {}
+			else if(passengers[3] == namesArray[resnum]) {}
+			else here = false;
+
+			return(here);
+		}
+		void deletepassanger(int resnum)
+		{
+			if(passengers[0] == namesArray[resnum]) {
+				passengers[0] = '-';
+				vehArray[0] = '5';
+				pointsArray[resnum] = pointsArray[resnum] +5;
+				placedArray[resnum] = false;
+				resNumArray[resnum] = 0;
+			}
+			else if(passengers[1] == namesArray[resnum]) {
+				passengers[1] = '-';
+				vehArray[1] = '2';
+				pointsArray[resnum] = pointsArray[resnum] +2;
+				placedArray[resnum] = false;
+				resNumArray[resnum] = 0;
+			}
+			else if(passengers[2] == namesArray[resnum]) {
+				passengers[2] = '-';
+				vehArray[2] = '1';
+				pointsArray[resnum] = pointsArray[resnum] +1;
+				placedArray[resnum] = false;
+				resNumArray[resnum] = 0;
+			}
+			else if(passengers[3] == namesArray[resnum]) {
+				passengers[3] = '-';
+				vehArray[3] = '2';
+				pointsArray[resnum] = pointsArray[resnum] +2;
+				placedArray[resnum] = false;
+				resNumArray[resnum] = 0;
+			}
+		}
 };
 
-void printMaster(){
-	for (int i = 0; i <24; i++){
-		std::cout << std::setw(3) << i << ".) " ;
-		std::cout << std::setw(25) << namesArray[i];
-		std::cout << std::setw(10) << "Points: " <<pointsArray[i];
-		std::cout << std::setw(30) << "Reservation Number : " << resNumArray[i] << endl;
-	}
-
-}
 
 
 int main() {
@@ -373,13 +467,14 @@ int main() {
 	//inputs and takes in chars to determine the correct option.
 	char option;
 	string pass;
-	int passNum, selectiontype, cartype, colortype, seattype;
+	int passNum, selectiontype, cartype, colortype, seattype, resnum;
 	bool nameInSystem = false;
 	bool numberfound = false;
 	int credits;
 	int reserveNum = 1;
+
 	do{
-		cout << "\n====================Menu==================" << endl
+		cout << "\n===================Menu=================" << endl
 			 <<	"1) Create a reservation" << endl
 			 <<	"2) Display the seat assignments" << endl
 			 <<	"3) Modify a reservation" << endl
@@ -660,10 +755,61 @@ int main() {
 		case '3' : //Modify a reservation
 			break;
 
-		case '4' : //Delete a reservation
+		case '4' :
+			cout << "What Reservation Number Do You Want To Delete? : " << endl;
+			cin >> resnum;
+			for (int i = 0; i <24; i++){
+				if(resNumArray[i] == resnum)
+				{
+					if(pTruck.passangerhere(seattype)==true) {
+						pTruck.deletepassanger(resnum);
+					}
+					else if(yTruck.passangerhere(seattype)==true) {
+						yTruck.deletepassanger(resnum);
+					}
+					else if(rTruck.passangerhere(seattype)==true) {
+						rTruck.deletepassanger(resnum);
+					}
+					else if(gCompact.passangerhere(seattype)==true) {
+						gCompact.deletepassanger(resnum);
+					}
+					else if(bCompact.passangerhere(seattype)==true) {
+						bCompact.deletepassanger(resnum);
+					}
+					else if(yCompact.passangerhere(seattype)==true) {
+						bCompact.deletepassanger(resnum);
+					}
+					else if(rSedan.passangerhere(seattype)==true) {
+						rSedan.deletepassanger(resnum);
+					}
+					else if(gSedan.passangerhere(seattype)==true) {
+						gSedan.deletepassanger(resnum);
+					}
+					else if(bSedan.passangerhere(seattype)==true) {
+						bSedan.deletepassanger(resnum);
+					}
+				}
+				else { cout << "Reservation Number Not Found " << endl; }
+				
+				if(resNumArray[i] > resnum)
+				{
+					resNumArray[i] = resNumArray[i]-1;//Since we are deleting the reservation we also must shift down those made after
+				}
+			}
 			break;
 
-		case '5' : //Print a reservation
+		case '5' :
+			cout << "What Reservation Number Would You like to See? : " << endl;
+			cin >> resnum;
+			for (int i = 0; i <24; i++){
+				if(resNumArray[i] == resnum)
+				{
+					std::cout << std::setw(3) << i << ".) " ;
+					std::cout << std::setw(25) << namesArray[i];
+					std::cout << std::setw(10) << "Points: " <<pointsArray[i];
+					std::cout << std::setw(30) << "Reservation Number : " << resNumArray[i] << endl;
+				}
+			}
 			break;
 
 		case '6' : //Print reservation masterlist
@@ -698,6 +844,6 @@ int main() {
 		}//end case
 	} while(1); //menu
 	return 0;
-}//int main()
+}
 
 
