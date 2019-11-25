@@ -155,15 +155,13 @@ class Pickup : public Vehicle {
 
 			return(here);
 		}
-		void deletepassanger(int resnum)
+		void deletepassanger(int pos)
 		{
-			if(passengers[0] == namesArray[resnum]) {
 				passengers[0] = '-';
 				vehArray[0] = '5';
-				pointsArray[resnum] = pointsArray[resnum] +5;
-				placedArray[resnum] = false;
-				resNumArray[resnum] = 0;
-			}
+				pointsArray[pos] = pointsArray[pos]+5;
+				placedArray[pos] = false;
+				resNumArray[pos] = 0;
 		}
 
 };
@@ -260,28 +258,28 @@ class Compact : public Vehicle {
 
 			return(here);
 		}
-		void deletepassanger(int resnum)
+		void deletepassanger(int pos)
 		{
-			if(passengers[0] == namesArray[resnum]) {
+			if(passengers[0] == namesArray[pos]) {
 				passengers[0] = '-';
 				vehArray[0] = '5';
-				pointsArray[resnum] = pointsArray[resnum] +5;
-				placedArray[resnum] = false;
-				resNumArray[resnum] = 0;
+				pointsArray[pos] = pointsArray[pos] +5;
+				placedArray[pos] = false;
+				resNumArray[pos] = 0;
 			}
-			else if(passengers[1] == namesArray[resnum]) {
+			else if(passengers[1] == namesArray[pos]) {
 				passengers[1] = '-';
 				vehArray[1] = '3';
-				pointsArray[resnum] = pointsArray[resnum] +3;
-				placedArray[resnum] = false;
-				resNumArray[resnum] = 0;
+				pointsArray[pos] = pointsArray[pos] +3;
+				placedArray[pos] = false;
+				resNumArray[pos] = 0;
 			}
-			else if(passengers[2] == namesArray[resnum]) {
+			else if(passengers[2] == namesArray[pos]) {
 				passengers[2] = '-';
 				vehArray[2] = '3';
-				pointsArray[resnum] = pointsArray[resnum] +3;
-				placedArray[resnum] = false;
-				resNumArray[resnum] = 0;
+				pointsArray[pos] = pointsArray[pos] +3;
+				placedArray[pos] = false;
+				resNumArray[pos] = 0;
 			}
 		}
 };
@@ -395,35 +393,35 @@ class Sedan : public Vehicle {
 
 			return(here);
 		}
-		void deletepassanger(int resnum)
+		void deletepassanger(int pos)
 		{
-			if(passengers[0] == namesArray[resnum]) {
+			if(passengers[0] == namesArray[pos]) {
 				passengers[0] = '-';
 				vehArray[0] = '5';
-				pointsArray[resnum] = pointsArray[resnum] +5;
-				placedArray[resnum] = false;
-				resNumArray[resnum] = 0;
+				pointsArray[pos] = pointsArray[pos] +5;
+				placedArray[pos] = false;
+				resNumArray[pos] = 0;
 			}
-			else if(passengers[1] == namesArray[resnum]) {
+			else if(passengers[1] == namesArray[pos]) {
 				passengers[1] = '-';
 				vehArray[1] = '2';
-				pointsArray[resnum] = pointsArray[resnum] +2;
-				placedArray[resnum] = false;
-				resNumArray[resnum] = 0;
+				pointsArray[pos] = pointsArray[pos] +2;
+				placedArray[pos] = false;
+				resNumArray[pos] = 0;
 			}
-			else if(passengers[2] == namesArray[resnum]) {
+			else if(passengers[2] == namesArray[pos]) {
 				passengers[2] = '-';
 				vehArray[2] = '1';
-				pointsArray[resnum] = pointsArray[resnum] +1;
-				placedArray[resnum] = false;
-				resNumArray[resnum] = 0;
+				pointsArray[pos] = pointsArray[pos] +1;
+				placedArray[pos] = false;
+				resNumArray[pos] = 0;
 			}
-			else if(passengers[3] == namesArray[resnum]) {
+			else if(passengers[3] == namesArray[pos]) {
 				passengers[3] = '-';
 				vehArray[3] = '2';
-				pointsArray[resnum] = pointsArray[resnum] +2;
-				placedArray[resnum] = false;
-				resNumArray[resnum] = 0;
+				pointsArray[pos] = pointsArray[pos] +2;
+				placedArray[pos] = false;
+				resNumArray[pos] = 0;
 			}
 		}
 };
@@ -761,36 +759,37 @@ int main() {
 			for (int i = 0; i <24; i++){
 				if(resNumArray[i] == resnum)
 				{
-					if(pTruck.passangerhere(seattype)==true) {
-						pTruck.deletepassanger(resnum);
+					if(pTruck.passangerhere(i)==true) {
+						cout << " HELLO" << endl;
+						pTruck.deletepassanger(i);
 					}
-					else if(yTruck.passangerhere(seattype)==true) {
-						yTruck.deletepassanger(resnum);
+					else if(yTruck.passangerhere(i)==true) {
+						yTruck.deletepassanger(i);
 					}
-					else if(rTruck.passangerhere(seattype)==true) {
-						rTruck.deletepassanger(resnum);
+					else if(rTruck.passangerhere(i)==true) {
+						rTruck.deletepassanger(i);
 					}
-					else if(gCompact.passangerhere(seattype)==true) {
-						gCompact.deletepassanger(resnum);
+					else if(gCompact.passangerhere(i)==true) {
+						gCompact.deletepassanger(i);
 					}
-					else if(bCompact.passangerhere(seattype)==true) {
-						bCompact.deletepassanger(resnum);
+					else if(bCompact.passangerhere(i)==true) {
+						bCompact.deletepassanger(i);
 					}
-					else if(yCompact.passangerhere(seattype)==true) {
-						bCompact.deletepassanger(resnum);
+					else if(yCompact.passangerhere(i)==true) {
+						bCompact.deletepassanger(i);
 					}
-					else if(rSedan.passangerhere(seattype)==true) {
-						rSedan.deletepassanger(resnum);
+					else if(rSedan.passangerhere(i)==true) {
+						rSedan.deletepassanger(i);
 					}
-					else if(gSedan.passangerhere(seattype)==true) {
-						gSedan.deletepassanger(resnum);
+					else if(gSedan.passangerhere(i)==true) {
+						gSedan.deletepassanger(i);
 					}
-					else if(bSedan.passangerhere(seattype)==true) {
-						bSedan.deletepassanger(resnum);
+					else if(bSedan.passangerhere(i)==true) {
+						bSedan.deletepassanger(i);
 					}
 				}
-				else { cout << "Reservation Number Not Found " << endl; }
-				
+				else {  }
+
 				if(resNumArray[i] > resnum)
 				{
 					resNumArray[i] = resNumArray[i]-1;//Since we are deleting the reservation we also must shift down those made after
