@@ -1,8 +1,3 @@
-//To-Do list: Create Function
-// Create a loop so that if somebody has pts>0 but pts < seat chosen, it loops but doesn't break out
-// Pick by type of seat
-
-
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Title: reservation.cpp
 // Course: Computational Problem Solving CPET-II
@@ -24,49 +19,13 @@
 using namespace std;
 
 //holds passenger names, points and if they have a placement
-string namesArray[24]; //holds the names of each  member
-int pointsArray[24]; //holds the points for each member
-bool placedArray[24]; //false if not placed
-int resNumArray[24]; //holds reservation numbers for each member
 
-//very secret
-string superSecretPassword = "password"; //dont tell anyone, it's illegal
+	string namesArray[24]; //holds the names of each  member
+	int pointsArray[24]; //holds the points for each member
+	bool placedArray[24]; //false if not placed
+	int resNumArray[24]; //holds reservation numbers for each member
 
-void readPassengers(){
-	ifstream myfile;
-	myfile.open("seat_credits.txt");
-	  if(myfile.fail())
-	  {
-		  cout << "\nFile doesn't exist... Program Terminated" << endl;
-		  exit(1);
-	  }
-	for (int i = 0; i <24; i++){
-		getline(myfile, namesArray[i]);
-		myfile >> pointsArray[i];
-		placedArray[i] = false;
-		resNumArray[i] = 00000;
-		myfile.ignore();
-	}
 
-	myfile.close();
-}
-
-void displayPassengers(){
-	for (int i = 0; i <24; i++){
-		std::cout << std::setw(3) << i << ".) " ;
-		std::cout << std::setw(25) << namesArray[i];
-		std::cout << std::setw(10) << "Points: " <<pointsArray[i] << endl;
-	}
-}
-void printMaster(){
-	for (int i = 0; i <24; i++){
-		std::cout << std::setw(3) << i << ".) " ;
-		std::cout << std::setw(25) << namesArray[i];
-		std::cout << std::setw(10) << "Points: " <<pointsArray[i];
-		std::cout << std::setw(30) << "Reservation Number : " << resNumArray[i] << endl;
-	}
-	return ;
-}
 
 class Vehicle {
 
@@ -74,11 +33,24 @@ class Vehicle {
 		string vehicleType;
 		char vehiclecolortype;
 	public :
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: createVehicle
+		// Inputs: char colortype, string type
+		// Outputs: void
+		// Description: Creates a vehicle object of a certain color
+		// and type of vehicle
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void createVehicle(char colortype, string type){
 			vehiclecolortype = colortype;
 			vehicleType = type;
 			return;
 		}
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: showVehicle
+		// Inputs: none
+		// Outputs: void
+		// Description: Displays a vehicle's type & color
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void showVehicle(){
 				switch (vehiclecolortype)
 				{
@@ -112,12 +84,26 @@ class Pickup : public Vehicle {
 		string passengers[1] = { "-"}; //Array that stores the names of the passangers in the car seats
 
 	public:
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: addPassenger
+		// Inputs: int passNum, int pos
+		// Outputs: void
+		// Description: Adds a passenger to a pickup truck
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void addPassenger(int passNum, int pos){
 			passengers[pos] = namesArray[passNum]; // add name to position
 			vehArray[pos] = 'X'; //change from value to X
 			placedArray[passNum] = true; //change placed array to true
 			pointsArray[passNum] = pointsArray[passNum] - 5; //delete points
+			return ;
 		}
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: displaycar
+		// Inputs: none
+		// Outputs: void
+		// Description: Displays an image of a pickup truck, its color,
+		// and its seating chart
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void displaycar()
 		{
 			cout << "        Truck " << endl;
@@ -129,6 +115,13 @@ class Pickup : public Vehicle {
 			cout << "__\\_/________________\\_/___" << endl;
 			cout << "       (-)   (" << vehArray[0] << ")" << endl;
 		}
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: displaycarwithnames
+		// Inputs: none
+		// Outputs: void
+		// Description: Displays an image of a pickup truck, its color,
+		// and its passenger names
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void displaycarwithnames()
 		{
 			cout << "        Truck " << endl;
@@ -140,22 +133,39 @@ class Pickup : public Vehicle {
 			cout << "__\\_/________________\\_/___" << endl;
 			cout << "       (-)   (" << passengers[0] << ")" << endl;
 		}
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: seatcheck
+		// Inputs: int pos
+		// Outputs: bool
+		// Description: Checks whether a seat is taken or not
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		bool seatcheck(int pos)
 		{
 			bool seatfree = false;
-			if(vehArray[0]== '5') //if seat is still a number/not changed to X
+			if(vehArray[0]== '5')
 				seatfree = true;
 			return(seatfree);
 		}
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: passangerhere
+		// Inputs: int resnum
+		// Outputs: bool
+		// Description: Checks if a passenger is placed in a certain seat
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		bool passangerhere(int resnum)
 		{
 			bool here = true;
 			if(passengers[0] == namesArray[resnum]) {}
 			else here = false;
-
 			return(here);
 		}
-		void deletepassanger(int pos)
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: deletepassenger
+		// Inputs: int pos
+		// Outputs: void
+		// Description: Deletes a passenger's reservation; wipes their reservations in the vehicle and reawards points
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		void deletepassenger(int pos)
 		{
 				passengers[0] = '-';
 				vehArray[0] = '5';
@@ -163,7 +173,6 @@ class Pickup : public Vehicle {
 				placedArray[pos] = false;
 				resNumArray[pos] = 0;
 		}
-
 };
 
 class Compact : public Vehicle {
@@ -171,7 +180,14 @@ class Compact : public Vehicle {
 	private :
 		char vehArray[3] = {'5', '3', '3'};//Array of values of each seat, will be replaced by an X when the seat is taken
 		string passengers[3] = { "-", "-", "-"}; //Array that stores the names of the passangers in the car seats
+
 	public :
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: addPassenger
+		// Inputs: int passNum, int pos
+		// Outputs: void
+		// Description: Adds a passenger to a Compact Car
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void addPassenger(int passNum, int pos){
 			if(pos == 0)
 			{
@@ -204,9 +220,14 @@ class Compact : public Vehicle {
 			else {
 				cout << "Seat Has Already Been Taken" << endl;
 			}
-
 		}
-
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: displaycar
+		// Inputs: none
+		// Outputs: void
+		// Description: Displays an image of a Compact, its color,
+		// and its seating chart
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void displaycar()
 		{
 			cout << "       Compact " << endl;
@@ -219,6 +240,13 @@ class Compact : public Vehicle {
 			cout << "       (-)   (" << vehArray[0] << ")" << endl;
 			cout << "       ("<< vehArray[1] << ")   (" << vehArray[2] << ")" << endl;
 		}
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: displaycarwithnames
+		// Inputs: none
+		// Outputs: void
+		// Description: Displays an image of a Compact, its color,
+		// and its passenger names
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void displaycarwithnames()
 		{
 			cout << "       Compact " << endl;
@@ -231,7 +259,12 @@ class Compact : public Vehicle {
 			cout << "       (-)   (" << passengers[0] << ")" << endl;
 			cout << "       ("<< passengers[1] << ")   (" << passengers[2] << ")" << endl;
 		}
-
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: seatcheck
+		// Inputs: int pos
+		// Outputs: bool
+		// Description: Checks whether a seat is taken or not
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		bool seatcheck(int pos)
 		{
 			bool seatfree = false;
@@ -248,6 +281,12 @@ class Compact : public Vehicle {
 
 			return(seatfree);
 		}
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: passangerhere
+		// Inputs: int resnum
+		// Outputs: bool
+		// Description: Checks if a passenger is placed in a certain seat
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		bool passangerhere(int resnum)
 		{
 			bool here = true;
@@ -258,7 +297,13 @@ class Compact : public Vehicle {
 
 			return(here);
 		}
-		void deletepassanger(int pos)
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: deletepassenger
+		// Inputs: int pos
+		// Outputs: void
+		// Description: Deletes a passenger's reservation; wipes their reservations in the vehicle and reawards points
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		void deletepassenger(int pos)
 		{
 			if(passengers[0] == namesArray[pos]) {
 				passengers[0] = '-';
@@ -291,6 +336,12 @@ class Sedan : public Vehicle {
 		string passengers[4] = { "-", "-", "-", "-"}; //Array that stores the names of the passangers in the car seats
 
 	public :
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: addPassenger
+		// Inputs: int passNum, int pos
+		// Outputs: void
+		// Description: Adds a passenger to a Sedan
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void addPassenger(int passNum, int pos){
 			if(pos == 0)
 			{
@@ -330,9 +381,14 @@ class Sedan : public Vehicle {
 			else {
 				cout << "Seat Has Already Been Taken" << endl;
 			}
-
 		}
-
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: displaycar
+		// Inputs: none
+		// Outputs: void
+		// Description: Displays an image of a Sedan, its color,
+		// and its seating chart
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void displaycar()
 		{
 			cout << "          Sedan" << endl;
@@ -345,7 +401,13 @@ class Sedan : public Vehicle {
 			cout << "       (-)   (" << vehArray[0] << ")" << endl;
 			cout << "       (" << vehArray[1] << ") (" << vehArray[2] << ") (" << vehArray[3] << ")" << endl;
 		}
-
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: displaycarwithnames
+		// Inputs: none
+		// Outputs: void
+		// Description: Displays an image of a Sedan, its color,
+		// and its passenger names
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		void displaycarwithnames()
 		{
 			cout << "          Sedan" << endl;
@@ -358,6 +420,12 @@ class Sedan : public Vehicle {
 			cout << "       (-)   (" << passengers[0] << ")" << endl;
 			cout << "       (" << passengers[1] << ") (" << passengers[2] << ") (" << passengers[3] << ")" << endl;
 		}
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: seatcheck
+		// Inputs: int pos
+		// Outputs: bool
+		// Description: Checks whether a seat is taken or not
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		bool seatcheck(int pos)
 		{
 			bool seatfree = false;
@@ -375,13 +443,17 @@ class Sedan : public Vehicle {
 			{
 				if(vehArray[2] == '1')  //if middle seat is still a number/not changed to X
 				{
-					cout << "here" << endl;
 					seatfree = true;
 				}
 			}
-
-		return(seatfree);
+			return(seatfree);
 		}
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: passangerhere
+		// Inputs: int resnum
+		// Outputs: bool
+		// Description: Checks if a passenger is placed in a certain seat
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		bool passangerhere(int resnum)
 		{
 			bool here = true;
@@ -393,7 +465,13 @@ class Sedan : public Vehicle {
 
 			return(here);
 		}
-		void deletepassanger(int pos)
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Name: deletepassenger
+		// Inputs: int pos
+		// Outputs: void
+		// Description: Deletes a passenger's reservation; wipes their reservations in the vehicle and reawards points
+		// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		void deletepassenger(int pos)
 		{
 			if(passengers[0] == namesArray[pos]) {
 				passengers[0] = '-';
@@ -426,9 +504,765 @@ class Sedan : public Vehicle {
 		}
 };
 
+//-----------------------------END OF CLASSES------------------------//
+//---------------------------START OF FUNCTIONS----------------------//
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: readPassengers
+// Inputs: none
+// Outputs: void
+// Description: reads in seat_credits.txt and loads data into
+// passenger arrays
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void readPassengers(){
+	ifstream myfile;
+	myfile.open("seat_credits.txt");
+	  if(myfile.fail())
+	  {
+		  cout << "\nFile doesn't exist... Program Terminated" << endl;
+		  exit(1);
+	  }
+	for (int i = 0; i <24; i++){
+		getline(myfile, namesArray[i]);
+		myfile >> pointsArray[i];
+		placedArray[i] = false;
+		resNumArray[i] = 00000;
+		myfile.ignore();
+	}
+	myfile.close();
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: displayPassengers
+// Inputs: none
+// Outputs: void
+// Description: displays a list of passenger names & their pts
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void displayPassengers(){
+	for (int i = 0; i <24; i++){
+		std::cout << std::setw(3) << i << ".) " ;
+		std::cout << std::setw(25) << namesArray[i];
+		std::cout << std::setw(10) << "Points: " <<pointsArray[i] << endl;
+	}
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: printMaster
+// Inputs: none
+// Outputs: void
+// Description: displays the full list of reservations
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void printMaster(){
+	for (int i = 0; i <24; i++){
+		std::cout << std::setw(3) << i << ".) " ;
+		std::cout << std::setw(25) << namesArray[i];
+		std::cout << std::setw(10) << "Points: " <<pointsArray[i];
+		std::cout << std::setw(30) << "Reservation Number : " << resNumArray[i] << endl;
+	}
+	return ;
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: printMenu
+// Inputs: none
+// Outputs: void
+// Description: displays the main user menu for simplicity
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void printMenu(){
+	cout << "\n===================Menu=================" << endl
+		 <<	"1) Create a reservation" << endl
+		 <<	"2) Display the seat assignments" << endl
+		 <<	"3) Modify a reservation" << endl
+		 <<	"4) Delete a reservation" << endl
+		 <<	"5) Print a reservation" << endl
+		 <<	"6) Print all reservations" << endl
+		 <<	"7) Quit :( \n" << endl
+		 << "What do you want to do?" << endl;
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: printSingleReservation
+// Inputs: none
+// Outputs: void
+// Description: Displays a specific reservation number, with name, points
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void printSingleReservation(Pickup &pTruck, Pickup &rTruck, Pickup &yTruck,
+		   Compact &gCompact, Compact &bCompact, Compact &yCompact,
+		   Sedan &rSedan, Sedan &gSedan, Sedan &bSedan){
+	int resnum;
+	cout << "What Reservation Number Would You like to See? : " << endl;
+	cin >> resnum;
+	for (int i = 0; i <24; i++){
+		if(resNumArray[i] == resnum)
+		{
+			std::cout << std::setw(3) << i << ".) " ;
+			std::cout << std::setw(25) << namesArray[i];
+			std::cout << std::setw(10) << "Points: " <<pointsArray[i];
+			std::cout << std::setw(30) << "Reservation Number : " << resNumArray[i] << endl;
+
+			if(pTruck.passangerhere(i)==true) {
+				pTruck.displaycarwithnames();
+			}
+			else if(yTruck.passangerhere(i)==true) {
+				yTruck.displaycarwithnames();
+			}
+			else if(rTruck.passangerhere(i)==true) {
+				rTruck.displaycarwithnames();
+			}
+			else if(gCompact.passangerhere(i)==true) {
+				gCompact.displaycarwithnames();
+			}
+			else if(bCompact.passangerhere(i)==true) {
+				bCompact.displaycarwithnames();
+			}
+			else if(yCompact.passangerhere(i)==true) {
+				bCompact.displaycarwithnames();
+			}
+			else if(rSedan.passangerhere(i)==true) {
+				rSedan.displaycarwithnames();
+			}
+			else if(gSedan.passangerhere(i)==true) {
+				gSedan.displaycarwithnames();
+			}
+			else if(bSedan.passangerhere(i)==true) {
+				bSedan.displaycarwithnames();
+			}
+
+	}
+}
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: createReservation
+// Inputs: all 9 vehicle objects
+// Outputs: void
+// Description: Creates a reservation for a given user. Edits
+// data arrays to hold the correct info.
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+int createReservation(int reserveNum, Pickup &pTruck, Pickup &rTruck, Pickup &yTruck,
+					   Compact &gCompact, Compact &bCompact, Compact &yCompact,
+					   Sedan &rSedan, Sedan &gSedan, Sedan &bSedan){
+
+	int passNum, selectiontype, cartype, colortype, seattype;
+	bool nameInSystem = false;
+	bool numberfound = false;
+	int credits;
+	bool completeRes = false;
+	cout << "Enter a passenger's number" << endl;
+	cin >> passNum; cin.ignore();
+
+	//iterates through all 24 passengers and pulls their data.
+	for (int i = 0; i < 24; i++) {
+		if (passNum == i){
+			nameInSystem = true;
+			credits = pointsArray[i];
+			cout << namesArray[i] << " has " << credits << " points left." << endl;
+			numberfound = true; //to not print out not found
+			if (credits == 0) {
+				cout << namesArray[i] << "has used all their credits!" << endl;
+				nameInSystem = false; //stops bug later on
+				break;
+			}
+			//exits create reservation if they already have one
+			if(placedArray[i] == true)
+			{
+				cout << namesArray[i] << " has already been placed!" << endl;
+				nameInSystem = false; //stops bug later on
+				break;
+			}
+		}
+
+	}//end loop
+
+	//breaks out if their number is not found
+	if(numberfound == false) {
+		nameInSystem = false;
+		cout << "User not found!" << endl;
+		return(reserveNum);
+	}
+
+	//if the passenger is valid, iterates through placement options
+	if (nameInSystem == true) {
+	do { //stay in do-while until the person is placed
+		cout <<"Would you like to select by a  \n1.)Specific Car and Seat \n2.)Seat Type" << endl;
+		cin >> selectiontype;
+
+		//selecting by specific seat
+		if(selectiontype == 1)
+		{
+			cout << "What Type Would You like to Choose? \n1.)Truck \n2.)Compact \n3.)Sedan" << endl;
+			cin >> cartype;
+
+			if(cartype ==1) //Truck
+			{	//if the passenger can be placed, place them in their chosen color
+				if (pointsArray[passNum] >= 5) {
+					cout << "What colortype Would You Choose ? \n1.)Purple \n2.)Yellow \n3.)Red" << endl;
+					cin >> colortype;
+					resNumArray[passNum] = reserveNum;
+					reserveNum++;
+					if(colortype == 1) { pTruck.addPassenger(passNum, 0); }
+					else if(colortype ==2) { yTruck.addPassenger(passNum, 0); }
+					else if(colortype ==3) { rTruck.addPassenger(passNum, 0); }
+				}
+			}
+
+			else if(cartype ==2) //Compact
+			{	//if the passenger can be placed, place them in their chosen color
+				cout << "What color compact? ? \n1.)Green \n2.)Blue \n3.)Yellow" << endl;
+				cin >> colortype;
+				cout << "What Seat Would You Like ? \n1.)Front \n2.)Back" << endl;
+				cin >> seattype;
+				seattype = seattype -1;
+
+				//checks if the person has enough points for the seat they want
+				if ((seattype == 0) && (pointsArray[passNum] >= 5)) { completeRes = true; }
+				else if ((seattype == 1) && (pointsArray[passNum] >= 3)) { completeRes = true;}
+				else { completeRes = false;}
+				if (completeRes == true){
+
+					//if they have enough points they will call the car and color they requested with the seat
+					if(colortype == 1) {
+						gCompact.addPassenger(passNum, seattype);
+						resNumArray[passNum] = reserveNum;
+						reserveNum++;
+					}
+					else if(colortype ==2) {
+						bCompact.addPassenger(passNum, seattype);
+						resNumArray[passNum] = reserveNum;
+						reserveNum++;
+					}
+					else if(colortype ==3) {
+						yCompact.addPassenger(passNum, seattype);
+						resNumArray[passNum] = reserveNum;
+						reserveNum++;
+					}
+				}
+			}
+
+						else if(cartype ==3)
+						{	//Gets car color & chosen seat type
+							cout << "What colortype Would You Choose ? \n1.)Red \n2.)Green \n3.)Blue" << endl;
+							cin >> colortype;
+							cout << "What Seat Would You Like ? \n1.)Front \n2.)Side \n3.)Middle" << endl;
+							cin >> seattype;
+
+							if(seattype == 1) { seattype = 0; }
+							//checks if they have enough points for the seat requested
+							if ((seattype == 0)&&(pointsArray[passNum] >= 5)) { completeRes = true;  }
+							else if ((seattype == 2)&&(pointsArray[passNum] >= 2)) {completeRes = true;  }
+							else if ((seattype == 3)&&(pointsArray[passNum] >= 1)) { completeRes = true;  }
+							else { completeRes = false;}
+
+							if (completeRes == true){
+								//if they have enough points they will call the car and color they requested with the seat
+								if(colortype == 1) {
+									rSedan.addPassenger(passNum, seattype);
+									resNumArray[passNum] = reserveNum;
+									reserveNum++;
+								}
+								else if(colortype ==2) {
+									gSedan.addPassenger(passNum, seattype);
+									resNumArray[passNum] = reserveNum;
+									reserveNum++;
+								}
+								else if(colortype ==3) {
+									bSedan.addPassenger(passNum, seattype);
+									resNumArray[passNum] = reserveNum;
+									reserveNum++;
+								}
+							}//end completeRes if
+						}//end cartype 3 if
+					}//end selection type 1
+
+					//selecting by seat type
+					if(selectiontype ==2)
+					{
+						cout << "What Seat Type Would You Like To Choose ? \n1.)Front \n2.)Back in Compact \n3.)Side Back \n4.)Middle" << endl;
+						cin >> seattype;
+						seattype = seattype -1;
+
+						//if statement to find what seat you want
+						//calls a function to see if that seat is free within the car
+						//Function returns a true or false value
+						//if true calls the add.Passanger function, and assigns reservation number
+						//if false continue to next if
+
+						if(seattype == 0) //Front Seat
+						{
+							if(pTruck.seatcheck(seattype)==true) {
+								pTruck.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(yTruck.seatcheck(seattype)==true) {
+								yTruck.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(rTruck.seatcheck(seattype)==true) {
+								rTruck.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(gCompact.seatcheck(seattype)==true) {
+								gCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(bCompact.seatcheck(seattype)==true) {
+								bCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(yCompact.seatcheck(seattype)==true) {
+								yCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(rSedan.seatcheck(seattype)==true) {
+								rSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(gSedan.seatcheck(seattype)==true) {
+								gSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(bSedan.seatcheck(seattype)==true) {
+								bSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else { cout << "All Seats Have been Taken" << endl; }
+						}
+
+						else if(seattype == 1) //Back in Compact
+						{
+							if(gCompact.seatcheck(seattype)==true) {
+								gCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(bCompact.seatcheck(seattype)==true) {
+								bCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(yCompact.seatcheck(seattype)==true) {
+								yCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else { cout << "All Seats Have been Taken" << endl; }
+						}
+
+						else if(seattype == 2) //Side in Sedan
+						{
+							if(rSedan.seatcheck(seattype)==true) {
+								rSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(gSedan.seatcheck(seattype)==true) {
+								gSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(bSedan.seatcheck(seattype)==true) {
+								bSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else { cout << "All Seats Have been Taken" << endl; }
+						}
+						else if(seattype == 3) //Middle Seat
+						{
+							if(rSedan.seatcheck(seattype)==true) {
+								rSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(gSedan.seatcheck(seattype)==true) {
+								gSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else if(bSedan.seatcheck(seattype)==true) {
+								bSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum;
+								reserveNum++;
+							}
+							else { cout << "All Seats Have been Taken" << endl; }
+						}
+					}
+
+					//Returns an error if you try to select a seat you can't afford
+					if 	((placedArray[passNum] == false)) {
+						cout << "You need more points for that option!" << endl;
+					}
+
+				//loops through create until the passenger is placed
+				} while ((placedArray[passNum] == false));
+
+				completeRes = false; //resets reservation complete boolean
+
+				} //if nameInSystem == true
+				return(reserveNum);
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: deleteReservation
+// Inputs: all 9 vehicle objects
+// Outputs: void
+// Description: Calls Functions to see if the passanger is in that seat, if they are they are then deleted and points are given back
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+void deletereservation( Pickup &pTruck, Pickup &rTruck, Pickup &yTruck,
+					   Compact &gCompact, Compact &bCompact, Compact &yCompact,
+					   Sedan &rSedan, Sedan &gSedan, Sedan &bSedan){
+			int resnum;
+			cout << "What Reservation Number Do You Want To Delete? : " << endl;
+			cin >> resnum;
+			for (int i = 0; i <24; i++){
+				if(resNumArray[i] == resnum)
+				{
+					if(pTruck.passangerhere(i)==true) {
+						pTruck.deletepassenger(i);
+					}
+					else if(yTruck.passangerhere(i)==true) {
+						yTruck.deletepassenger(i);
+					}
+					else if(rTruck.passangerhere(i)==true) {
+						rTruck.deletepassenger(i);
+					}
+					else if(gCompact.passangerhere(i)==true) {
+						gCompact.deletepassenger(i);
+					}
+					else if(bCompact.passangerhere(i)==true) {
+						bCompact.deletepassenger(i);
+					}
+					else if(yCompact.passangerhere(i)==true) {
+						bCompact.deletepassenger(i);
+					}
+					else if(rSedan.passangerhere(i)==true) {
+						rSedan.deletepassenger(i);
+					}
+					else if(gSedan.passangerhere(i)==true) {
+						gSedan.deletepassenger(i);
+					}
+					else if(bSedan.passangerhere(i)==true) {
+						bSedan.deletepassenger(i);
+					}
+				}
+				else {  }
+
+				if(resNumArray[i] > resnum)
+				{
+					resNumArray[i] = resNumArray[i]-1;//Since we are deleting the reservation we also must shift down those made after
+				}
+
+			return;
+		}
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: cmodifyReservation
+// Inputs: all 9 vehicle objects
+// Outputs: void
+// Description: Gets reservation number, deletes them from the system and gives them the points back
+// Then asks for where they would want to be put and puts them in the seat
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+int modifyreservation(int reserveNum, Pickup &pTruck, Pickup &rTruck, Pickup &yTruck,
+					   Compact &gCompact, Compact &bCompact, Compact &yCompact,
+					   Sedan &rSedan, Sedan &gSedan, Sedan &bSedan){
+	int passNum, selectiontype, cartype, colortype, seattype, resnum;
+	bool completeRes = false;
+		cout << "What Reservation Number Do You Want To Modify? : " << endl;
+			cin >> resnum;
+			for (int i = 0; i <24; i++){
+				if(resNumArray[i] == resnum)
+				{
+					if(pTruck.passangerhere(i)==true) {
+						pTruck.deletepassenger(i);
+						passNum = i;
+					}
+					else if(yTruck.passangerhere(i)==true) {
+						yTruck.deletepassenger(i);
+						passNum = i;
+					}
+					else if(rTruck.passangerhere(i)==true) {
+						rTruck.deletepassenger(i);
+						passNum = i;
+					}
+					else if(gCompact.passangerhere(i)==true) {
+						gCompact.deletepassenger(i);
+						passNum = i;
+					}
+					else if(bCompact.passangerhere(i)==true) {
+						bCompact.deletepassenger(i);
+						passNum = i;
+					}
+					else if(yCompact.passangerhere(i)==true) {
+						bCompact.deletepassenger(i);
+						passNum = i;
+					}
+					else if(rSedan.passangerhere(i)==true) {
+						rSedan.deletepassenger(i);
+						passNum = i;
+					}
+					else if(gSedan.passangerhere(i)==true) {
+						gSedan.deletepassenger(i);
+						passNum = i;
+					}
+					else if(bSedan.passangerhere(i)==true) {
+						bSedan.deletepassenger(i);
+						passNum = i;
+					}
+				}
+				else {  }
+
+				if(resNumArray[i] > resnum)
+				{
+					resNumArray[i] = resNumArray[i]-1;//Since we are deleting the reservation we also must shift down those made after
+				}
+			}
+				do { //stay in do-while until the person is placed
+		cout << namesArray[passNum] << " has " << pointsArray[passNum] << " points left." << endl;
+		cout <<"Would you like to select by a  \n1.)Specific Car and Seat \n2.)Seat Type" << endl;
+		cin >> selectiontype;
+
+		//selecting by specific seat
+		if(selectiontype == 1)
+		{
+			cout << "What Type Would You like to Choose? \n1.)Truck \n2.)Compact \n3.)Sedan" << endl;
+			cin >> cartype;
+
+			if(cartype ==1) //Truck
+			{	//if the passenger can be placed, place them in their chosen color
+				if (pointsArray[passNum] >= 5) {
+					cout << "What colortype Would You Choose ? \n1.)Purple \n2.)Yellow \n3.)Red" << endl;
+					cin >> colortype;
+					resNumArray[passNum] = reserveNum -1;
+					reserveNum++;
+					if(colortype == 1) { pTruck.addPassenger(passNum, 0); }
+					else if(colortype ==2) { yTruck.addPassenger(passNum, 0); }
+					else if(colortype ==3) { rTruck.addPassenger(passNum, 0); }
+				}
+			}
+
+			else if(cartype ==2) //Compact
+			{	//if the passenger can be placed, place them in their chosen color
+				cout << "What color compact? ? \n1.)Green \n2.)Blue \n3.)Yellow" << endl;
+				cin >> colortype;
+				cout << "What Seat Would You Like ? \n1.)Front \n2.)Back" << endl;
+				cin >> seattype;
+				seattype = seattype -1;
+
+				//checks if the person has enough points for the seat they want
+				if ((seattype == 0) && (pointsArray[passNum] >= 5)) { completeRes = true; }
+				else if ((seattype == 1) && (pointsArray[passNum] >= 3)) { completeRes = true;}
+				else { completeRes = false;}
+				if (completeRes == true){
+
+					//if they have enough points they will call the car and color they requested with the seat
+					if(colortype == 1) {
+						gCompact.addPassenger(passNum, seattype);
+						resNumArray[passNum] = reserveNum -1;
+						reserveNum++;
+					}
+					else if(colortype ==2) {
+						bCompact.addPassenger(passNum, seattype);
+						resNumArray[passNum] = reserveNum -1;
+						reserveNum++;
+					}
+					else if(colortype ==3) {
+						yCompact.addPassenger(passNum, seattype);
+						resNumArray[passNum] = reserveNum -1;
+						reserveNum++;
+					}
+				}
+			}
+						else if(cartype ==3)
+						{	//Gets car color & chosen seat type
+							cout << "What colortype Would You Choose ? \n1.)Red \n2.)Green \n3.)Blue" << endl;
+							cin >> colortype;
+							cout << "What Seat Would You Like ? \n1.)Front \n2.)Side \n3.)Middle" << endl;
+							cin >> seattype;
+
+							if(seattype == 1) { seattype = 0; }
+							//checks if they have enough points for the seat requested
+							if ((seattype == 0)&&(pointsArray[passNum] >= 5)) { completeRes = true;  }
+							else if ((seattype == 2)&&(pointsArray[passNum] >= 2)) {completeRes = true;  }
+							else if ((seattype == 3)&&(pointsArray[passNum] >= 1)) { completeRes = true;  }
+							else { completeRes = false;}
+
+							if (completeRes == true){
+								//if they have enough points they will call the car and color they requested with the seat
+								if(colortype == 1) {
+									rSedan.addPassenger(passNum, seattype);
+									resNumArray[passNum] = reserveNum -1;
+									reserveNum++;
+								}
+								else if(colortype ==2) {
+									gSedan.addPassenger(passNum, seattype);
+									resNumArray[passNum] = reserveNum -1;
+									reserveNum++;
+								}
+								else if(colortype ==3) {
+									cout << "here" << endl;
+									bSedan.addPassenger(passNum, seattype);
+									resNumArray[passNum] = reserveNum -1;
+									reserveNum++;
+								}
+							}//end completeRes if
+						}//end cartype 3 if
+					}//end selection type 1
+
+					//selecting by seat type
+					if(selectiontype ==2)
+					{
+						cout << "What Seat Type Would You Like To Choose ? \n1.)Front \n2.)Back in Compact \n3.)Side Back \n4.)Middle" << endl;
+						cin >> seattype;
+						seattype = seattype -1;
+
+						//if statement to find what seat you want
+						//calls a function to see if that seat is free within the car
+						//Function returns a true or false value
+						//if true calls the add.Passanger function, and assigns reservation number
+						//if false continue to next if
+
+						if(seattype == 0) //Front Seat
+						{
+							if(pTruck.seatcheck(seattype)==true) {
+								pTruck.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(yTruck.seatcheck(seattype)==true) {
+								yTruck.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(rTruck.seatcheck(seattype)==true) {
+								rTruck.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(gCompact.seatcheck(seattype)==true) {
+								gCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(bCompact.seatcheck(seattype)==true) {
+								bCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(yCompact.seatcheck(seattype)==true) {
+								yCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(rSedan.seatcheck(seattype)==true) {
+								rSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(gSedan.seatcheck(seattype)==true) {
+								gSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(bSedan.seatcheck(seattype)==true) {
+								bSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else { cout << "All Seats Have been Taken" << endl; }
+						}
+
+						else if(seattype == 1) //Back in Compact
+						{
+							if(gCompact.seatcheck(seattype)==true) {
+								gCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(bCompact.seatcheck(seattype)==true) {
+								bCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(yCompact.seatcheck(seattype)==true) {
+								yCompact.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else { cout << "All Seats Have been Taken" << endl; }
+						}
+
+						else if(seattype == 2) //Side in Sedan
+						{
+							if(rSedan.seatcheck(seattype)==true) {
+								rSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(gSedan.seatcheck(seattype)==true) {
+								gSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(bSedan.seatcheck(seattype)==true) {
+								bSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else { cout << "All Seats Have been Taken" << endl; }
+						}
+						else if(seattype == 3) //Middle Seat
+						{
+							if(rSedan.seatcheck(seattype)==true) {
+								rSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(gSedan.seatcheck(seattype)==true) {
+								gSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else if(bSedan.seatcheck(seattype)==true) {
+								bSedan.addPassenger(passNum, seattype);
+								resNumArray[passNum] = reserveNum -1;
+								reserveNum++;
+							}
+							else { cout << "All Seats Have been Taken" << endl; }
+						}
+					}
+
+					//Returns an error if you try to select a seat you can't afford
+					if 	((placedArray[passNum] == false)) {
+						cout << "You need more points for that option!" << endl;
+					}
+
+				//loops through create until the passenger is placed
+				} while ((placedArray[passNum] == false));
+
+				completeRes = false; //resets reservation complete boolean
+				return(reserveNum);
+}
 
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Name: int main
+// Inputs: none
+// Outputs: void
+// Description: Declares cars, prints out menu and loops through menu options until program is exited
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 int main() {
+	string superSecretPassword = "password"; //needed to print the full reservation list
+	int reserveNum = 1;
 	readPassengers(); //brings in text file of passanger names and points left
 
 	//Object instantiation
@@ -452,290 +1286,34 @@ int main() {
 	bSedan.createVehicle('B', "Sedan");
 
 
-
-	cout << "------------------------------------------" << endl;
+	cout << "       c < " << endl;
+	cout << "      /\\/     o    o    o    o" << endl;
+	cout << "     /_    / \\/) /\\/) /\\/) /\\/)" << endl;
+	cout << "   _[]/___/__/_/__/_/__/_/__/______" << endl;
+	cout << "-~-~ `---/----/----/----/-------'  -~-~" << endl;
+	cout << "    -~-~-~-~  -~-~  -~-~-~-~" << endl;
 	cout << "           Team Members and Points " << endl;
 	displayPassengers();
 
-	//pTruck.displaycar();
-	//gCompact.displaycar();
-	//rSedan.displaycar();
+
 
 	//Operates a menu with switch/case statements. Prompts user for
 	//inputs and takes in chars to determine the correct option.
 	char option;
 	string pass;
-	int passNum, selectiontype, cartype, colortype, seattype, resnum;
-	bool nameInSystem = false;
-	bool numberfound = false;
-	int credits;
-	int reserveNum = 1;
 
 	do{
-		cout << "\n===================Menu=================" << endl
-			 <<	"1) Create a reservation" << endl
-			 <<	"2) Display the seat assignments" << endl
-			 <<	"3) Modify a reservation" << endl
-			 <<	"4) Delete a reservation" << endl
-			 <<	"5) Print a reservation" << endl
-			 <<	"6) Print all reservations" << endl
-			 <<	"7) Quit :( \n" << endl
-			 << "What do you want to do?" << endl;
+		//generates menu & takes in user option
+		printMenu();
 		cin >> option;
 
 		switch(option){
 
 		case '1': //Create a reservation
-			cout << "Enter a passenger's number" << endl;
-			cin >> passNum; cin.ignore();
-
-			for (int i = 0; i < 24; i++) {
-				if (passNum == i){
-					nameInSystem = true;
-					credits = pointsArray[i];
-					cout << namesArray[i] << " has " << credits << " points left." << endl;
-					numberfound = true; //to not print out not found
-					if (credits == 0) {
-						cout << namesArray[i] << "has used all their credits!" << endl;
-						nameInSystem = false; //stops bug later on
-						break;
-					}
-					if(placedArray[i] == true)
-					{
-						cout << namesArray[i] << " has already been placed!" << endl;
-						nameInSystem = false; //stops bug later on
-						break;
-					}
-				}
-
-			}//end loop
-
-			if(numberfound == false) {
-				nameInSystem = false;
-				cout << "User not found!" << endl;
-				break;
-			}
-
-
-			if (nameInSystem == true) {
-
-
-				cout <<"Would you like to select by a  \n1.)Specific Car and Seat \n2.)Seat Type" << endl;
-				cin >> selectiontype;
-
-				if(selectiontype ==1)
-				{
-					cout << "What Type Would You like to Choose? \n1.)Truck \n2.)Compact \n3.)Sedan" << endl;
-					cin >> cartype;
-					if(cartype ==1) //Truck
-					{
-						if (pointsArray[passNum] >= 5) {
-							cout << "What colortype Would You Choose ? \n1.)Purple \n2.)Yellow \n3.)Red" << endl;
-							cin >> colortype;
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-							if(colortype == 1) { pTruck.addPassenger(passNum, 0); }
-							else if(colortype ==2) { yTruck.addPassenger(passNum, 0); }
-							else if(colortype ==3) { rTruck.addPassenger(passNum, 0); }
-						}
-						else {
-							break; //if passenger has less than 5 credits, break out of the
-						}
-
-					}
-					else if(cartype ==2) //Compact
-					{
-						cout << "What colortype Would You Choose ? \n1.)Green \n2.)Blue \n3.)Yellow" << endl;
-						cin >> colortype;
-						cout << "What Seat Would You Like ? \n1.)Front \n2.)Back" << endl;
-						cin >> seattype;
-						seattype = seattype -1;
-						//checks if the person has enough points for the seat they want
-						if ((seattype == 0)&(pointsArray[passNum] >= 5)) { continue; }
-						else if ((seattype == 1)&(pointsArray[passNum] >= 3)) { continue; }
-						else  { break; }
-
-						//if they have enough points they will call the car and color they requested with the seat
-						if(colortype == 1) {
-							gCompact.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(colortype ==2) {
-							bCompact.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(colortype ==3) {
-							yCompact.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-					}
-					else if(cartype ==3)
-					{
-						cout << "What colortype Would You Choose ? \n1.)Red \n2.)Green \n3.)Blue" << endl;
-						cin >> colortype;
-						cout << "What Seat Would You Like ? \n1.)Front \n2.)Side \n3.)Middle" << endl;
-						cin >> seattype;
-						if(seattype == 1) { seattype =0; }
-
-						//checks if they have enough points for the seat requested
-						if ((seattype == 0)&&(pointsArray[passNum] >= 5)) { continue; }
-						else if ((seattype == 2)&&(pointsArray[passNum] >= 2)) { continue; }
-						else if ((seattype == 3)&&(pointsArray[passNum] >= 1)) { continue; }
-						else  { break; }
-
-
-						//if they have enough points they will call the car and color they requested with the seat
-						if(colortype == 1) {
-							rSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(colortype ==2) {
-							gSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(colortype ==3) {
-							cout << "here" << endl;
-							bSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-					}
-				}
-				if(selectiontype ==2)
-				{
-					cout << "What Seat Type Would You Like To Choose ? \n1.)Front \n2.)Back in Compact \n3.)Side Back \n4.)Middle" << endl;
-					cin >> seattype;
-					seattype = seattype -1;
-
-					//if statement to find what seat you want
-					//calls a function to see if that seat is free within the car
-					//Function returns a true or false value
-					//if true calls the add.Passanger function, and assigns reservation number
-					//if false continue to next if
-
-					if(seattype == 0) //Front Seat
-					{
-						if(pTruck.seatcheck(seattype)==true) {
-							pTruck.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(yTruck.seatcheck(seattype)==true) {
-							yTruck.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(rTruck.seatcheck(seattype)==true) {
-							rTruck.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(gCompact.seatcheck(seattype)==true) {
-							gCompact.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(bCompact.seatcheck(seattype)==true) {
-							bCompact.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(yCompact.seatcheck(seattype)==true) {
-							yCompact.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(rSedan.seatcheck(seattype)==true) {
-							rSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(gSedan.seatcheck(seattype)==true) {
-							gSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(bSedan.seatcheck(seattype)==true) {
-							bSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else { cout << "All Seats Have been Taken" << endl; }
-					}
-
-					else if(seattype == 1) //Back in Compact
-					{
-						if(gCompact.seatcheck(seattype)==true) {
-							gCompact.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(bCompact.seatcheck(seattype)==true) {
-							bCompact.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(yCompact.seatcheck(seattype)==true) {
-							yCompact.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else { cout << "All Seats Have been Taken" << endl; }
-					}
-
-					else if(seattype == 2) //Side in Sedan
-					{
-						if(rSedan.seatcheck(seattype)==true) {
-							rSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(gSedan.seatcheck(seattype)==true) {
-							gSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(bSedan.seatcheck(seattype)==true) {
-							bSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else { cout << "All Seats Have been Taken" << endl; }
-					}
-					else if(seattype == 3) //Middle Seat
-					{
-						if(rSedan.seatcheck(seattype)==true) {
-							rSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(gSedan.seatcheck(seattype)==true) {
-							gSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else if(bSedan.seatcheck(seattype)==true) {
-							bSedan.addPassenger(passNum, seattype);
-							resNumArray[passNum] = reserveNum;
-							reserveNum++;
-						}
-						else { cout << "All Seats Have been Taken" << endl; }
-					}
-				}
-
-			}
-
-
-
+			reserveNum = createReservation(reserveNum, pTruck, rTruck, yTruck, gCompact, bCompact, yCompact, rSedan,gSedan, bSedan);
 			break;
 
 		case '2': // Display seats
-
 			pTruck.displaycar();
 			yTruck.displaycar();
 			rTruck.displaycar();
@@ -751,69 +1329,21 @@ int main() {
 			break;
 
 		case '3' : //Modify a reservation
+			reserveNum = modifyreservation(reserveNum, pTruck, rTruck, yTruck, gCompact, bCompact, yCompact, rSedan,gSedan, bSedan);
 			break;
 
-		case '4' :
-			cout << "What Reservation Number Do You Want To Delete? : " << endl;
-			cin >> resnum;
-			for (int i = 0; i <24; i++){
-				if(resNumArray[i] == resnum)
-				{
-					if(pTruck.passangerhere(i)==true) {
-						cout << " HELLO" << endl;
-						pTruck.deletepassanger(i);
-					}
-					else if(yTruck.passangerhere(i)==true) {
-						yTruck.deletepassanger(i);
-					}
-					else if(rTruck.passangerhere(i)==true) {
-						rTruck.deletepassanger(i);
-					}
-					else if(gCompact.passangerhere(i)==true) {
-						gCompact.deletepassanger(i);
-					}
-					else if(bCompact.passangerhere(i)==true) {
-						bCompact.deletepassanger(i);
-					}
-					else if(yCompact.passangerhere(i)==true) {
-						bCompact.deletepassanger(i);
-					}
-					else if(rSedan.passangerhere(i)==true) {
-						rSedan.deletepassanger(i);
-					}
-					else if(gSedan.passangerhere(i)==true) {
-						gSedan.deletepassanger(i);
-					}
-					else if(bSedan.passangerhere(i)==true) {
-						bSedan.deletepassanger(i);
-					}
-				}
-				else {  }
-
-				if(resNumArray[i] > resnum)
-				{
-					resNumArray[i] = resNumArray[i]-1;//Since we are deleting the reservation we also must shift down those made after
-				}
-			}
+		case '4' : //Delete a Reservation
+			deletereservation(pTruck, rTruck, yTruck, gCompact, bCompact, yCompact, rSedan,gSedan, bSedan);
 			break;
 
-		case '5' :
-			cout << "What Reservation Number Would You like to See? : " << endl;
-			cin >> resnum;
-			for (int i = 0; i <24; i++){
-				if(resNumArray[i] == resnum)
-				{
-					std::cout << std::setw(3) << i << ".) " ;
-					std::cout << std::setw(25) << namesArray[i];
-					std::cout << std::setw(10) << "Points: " <<pointsArray[i];
-					std::cout << std::setw(30) << "Reservation Number : " << resNumArray[i] << endl;
-				}
-			}
+		case '5' : //Prints out a specific reservation
+				printSingleReservation(pTruck, rTruck, yTruck, gCompact, bCompact, yCompact, rSedan,gSedan, bSedan);
 			break;
 
 		case '6' : //Print reservation masterlist
 			cout << "Please enter administrator password..." << endl;
 			cin >> pass; cin.ignore();
+			//checks for password correctness
 			if (pass == superSecretPassword) {
 				cout << "Access granted: printing reservations." << endl;
 				printMaster();
@@ -832,7 +1362,6 @@ int main() {
 			else {
 				cout << "Access denied : password incorrect." << endl;
 			}
-
 			break;
 
 		case'7' : //Exits the program
